@@ -54,20 +54,17 @@ def apply_coupons(cart, coupons)
     }
   }
   return cart
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
-  
 end
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
-  #
   # REMEMBER: This method **should** update cart
   result = []
   cart.each { |grocery|
     if grocery[:clearance]
       (grocery[:price] *= 0.8).round(2)
+    end
+    result.push(grocery)
   }
   return result
 end
@@ -82,4 +79,17 @@ def checkout(cart, coupons)
   #
   # BEFORE it begins the work of calculating the total (or else you might have
   # some irritated customers
+  
+  #pp coupons
+  total = 0
+  consolidated_cart = consolidate_cart(cart)
+  coupons_applied = apply_coupons(consolidated_cart, coupons)
+  clearance_applied = apply_clearance(coupons_applied)
+  clearance_applied.each { |grocery|
+    total += (grocery[:price]*grocery[:count])
+  }
+  if total > 100
+    total *= .9
+  end
+  total.round(2)
 end

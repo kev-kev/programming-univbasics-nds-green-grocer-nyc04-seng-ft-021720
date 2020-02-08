@@ -39,8 +39,9 @@ def apply_coupons(cart, coupons)
   cart.each { |grocery|
     coupons.each{ |coupon|
     # looking for a way to move onto the next coupon if it there aren't enough items to apply the coupon
-    break if grocery[:count] - coupons[:num] < 0
-    if coupon[:item] == grocery[:item]
+    if grocery[:count] - coupons[:num] < 0
+      
+    elsif coupon[:item] == grocery[:item]
       # Subtracting the items the coupon will be applied to
       # Creating a new grocery object with the discount and adding it to the cart
       grocery[:count] -= coupon[:num]
